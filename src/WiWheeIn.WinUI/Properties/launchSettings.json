@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WiWheeIn.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WiWheeIn.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

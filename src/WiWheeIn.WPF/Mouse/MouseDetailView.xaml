@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="WiWheeIn.WPF.Mouse.MouseDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:WiWheeIn.WPF.Mouse"
+    mc:Ignorable="d" 
+    Background="White"      
+    d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Details" FontSize="16" Margin="12" />
+        
+        <CheckBox Grid.Row="1" Content="Inverted" IsChecked="{Binding IsInverted, Mode=TwoWay}" Margin="12, 4"/>
+
+        <Expander Grid.Row="2" Header="Mouse Device Details" Padding="9">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBox Text="{Binding DevicePath, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" Margin="0, 4"/>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding AllInfos}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Key, Mode=OneWay}" /><Run Text=":" />
+                                <Run Text="{Binding Value, Mode=OneWay}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
+    </Grid>
+</UserControl>
