@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mouse="using:WiWheeIn.BusinessLogic.Mouse"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance Type=mouse:MouseDevicesViewModel, IsDesignTimeCreatable=False}">
+    d:DataContext="{d:DesignInstance Type=mouse:MouseOverviewViewModel, IsDesignTimeCreatable=False}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -18,15 +18,20 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock FontSize="16" Margin="24, 12">
+            <TextBlock FontSize="16" Margin="20, 12, 20, 8">
                 <Run Text="&#xe962;" FontFamily="Segoe MDL2 Assets" FontSize="12"/>
                 <Run Text="Mouse Device List" />
             </TextBlock>
 
-            <ListView x:Name="PART_List" BorderBrush="Transparent" Grid.Row="1" ItemsSource="{Binding MouseDevices}" SelectionMode="Single" Background="Transparent">
+            <Button Grid.Row="1" Command="{Binding ReloadCommand}" Height="40" Width="40" HorizontalAlignment="Left" Margin="20, 0, 20, 8">
+                <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="10" Text="&#xE72C;"/>
+            </Button>
+
+            <ListView x:Name="PART_List" BorderBrush="Transparent" Grid.Row="2" ItemsSource="{Binding MouseDevices}" SelectionMode="Single" Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="6, 4">
@@ -50,7 +55,8 @@
         <local:MouseDetailView Grid.Column="1" DataContext="{Binding ElementName=PART_List, Path=SelectedItem}" />
 
         <ProgressBar 
-            Grid.ColumnSpan="2" 
+            Grid.ColumnSpan="2"
+            Margin="48, 0"
             HorizontalAlignment="Stretch" 
             VerticalAlignment="Center" 
             IsIndeterminate="{Binding IsLoading}" 

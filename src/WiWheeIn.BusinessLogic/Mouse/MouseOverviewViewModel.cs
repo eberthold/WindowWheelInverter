@@ -1,22 +1,30 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System.Collections.Immutable;
+using WiWheeIn.BusinessLogic.Framework;
 
 namespace WiWheeIn.BusinessLogic.Mouse;
 
-public class MouseDevicesViewModel : ObservableObject
+public class MouseOverviewViewModel : ObservableObject
 {
     private bool _isLoading;
     private IReadOnlyCollection<MouseDeviceViewModel> _mouseDevices = ImmutableList<MouseDeviceViewModel>.Empty;
     private readonly IMouseDeviceCrawler _deviceCrawler;
     private readonly IMouseDeviceViewModelFactory _mouseDeviceViewModelFactory;
+    private readonly IMainThreadDispatcher _mainThreadDispatcher;
 
-    public MouseDevicesViewModel(
+    public MouseOverviewViewModel(
         IMouseDeviceCrawler deviceCrawler,
-        IMouseDeviceViewModelFactory mouseDeviceViewModelFactory)
+        IMouseDeviceViewModelFactory mouseDeviceViewModelFactory,
+        IMainThreadDispatcher mainThreadDispatcher)
     {
         _deviceCrawler = deviceCrawler;
         _mouseDeviceViewModelFactory = mouseDeviceViewModelFactory;
+        _mainThreadDispatcher = mainThreadDispatcher;
+        ReloadCommand = new AsyncRelayCommand(ReloadAsync, CheckCanReload);
     }
+
+    public AsyncRelayCommand ReloadCommand { get; }
 
     public bool IsLoading
     {
@@ -29,6 +37,7 @@ public class MouseDevicesViewModel : ObservableObject
             }
 
             OnPropertyChanged(nameof(IsEnabled));
+            RefreshCommands();
         }
     }
 
@@ -54,5 +63,23 @@ public class MouseDevicesViewModel : ObservableObject
         {
             IsLoading = false;
         }
+    }
+
+    private Task ReloadAsync()
+    {
+        return LoadDataAsync();
+    }
+
+    private bool CheckCanReload()
+    {
+        return !IsLoading;
+    }
+
+    private void RefreshCommands()
+    {
+        _mainThreadDispatcher.InvokeOnMainThread(() =>
+        {
+            ReloadCommand.NotifyCanExecuteChanged();
+        });
     }
 }

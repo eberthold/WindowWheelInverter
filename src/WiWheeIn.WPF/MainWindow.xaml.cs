@@ -12,7 +12,7 @@ namespace WiWheeIn.WPF
         {
             InitializeComponent();
 
-            var vm = App.ServiceProvider.GetRequiredService<MouseDevicesViewModel>();
+            var vm = App.ServiceProvider.GetRequiredService<MouseOverviewViewModel>();
             PART_Page.DataContext = vm;
             _ = vm.LoadDataAsync().ConfigureAwait(false);
 

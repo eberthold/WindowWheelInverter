@@ -12,7 +12,7 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        var devicesViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<MouseDevicesViewModel>();
+        var devicesViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<MouseOverviewViewModel>();
         PART_Page.DataContext = devicesViewModel;
         _ = devicesViewModel.LoadDataAsync();
 

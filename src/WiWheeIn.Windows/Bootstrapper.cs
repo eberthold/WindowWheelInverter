@@ -19,7 +19,7 @@ namespace WiWheeIn.Windows
             services.AddSingleton<IUserInfoService, UserInfoService>();
 
             services.AddTransient<MouseDeviceViewModel>();
-            services.AddTransient<MouseDevicesViewModel>();
+            services.AddTransient<MouseOverviewViewModel>();
         }
     }
 }

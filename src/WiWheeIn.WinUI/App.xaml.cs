@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using System;
-using WiWheeIn.BusinessLogic.Devices;
-using WiWheeIn.BusinessLogic.Mouse;
-using WiWheeIn.Windows;
-using WiWheeIn.Windows.Devices;
-using WiWheeIn.Windows.Mouse;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

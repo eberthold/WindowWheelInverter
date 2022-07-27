@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using WiWheeIn.Windows;
 
 namespace WiWheeIn.WPF
 {
@@ -19,7 +18,6 @@ namespace WiWheeIn.WPF
         public static void Main(string[] args)
         {
             var services = new ServiceCollection();
-
             Bootstrapper.ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
 
