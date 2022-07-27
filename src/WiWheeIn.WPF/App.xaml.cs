@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using WiWheeIn.BusinessLogic.Devices;
-using WiWheeIn.BusinessLogic.Mouse;
-using WiWheeIn.Windows.Devices;
-using WiWheeIn.Windows.Mouse;
+using WiWheeIn.Windows;
 
 namespace WiWheeIn.WPF
 {
@@ -13,23 +10,21 @@ namespace WiWheeIn.WPF
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+        }
+
         [STAThread]
         public static void Main(string[] args)
         {
             var services = new ServiceCollection();
 
-            services.AddSingleton<IDevicePathBuilder, DevicePathBuilder>();
-            services.AddSingleton<IMouseDeviceCrawler, MouseDeviceCrawler>();
-            services.AddSingleton<IMouseWheelInvertedStateService, MouseWheelInvertedStateService>();
-            services.AddSingleton<IMouseDeviceViewModelFactory, MouseDeviceViewModelFactory>();
-
-            services.AddTransient<MouseDeviceViewModel>();
-            services.AddTransient<MouseDevicesViewModel>();
-
+            Bootstrapper.ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
 
+            var app = new App(); 
             var window = new MainWindow();
-            var app = new App();
             app.Run(window);
         }
 

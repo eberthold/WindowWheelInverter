@@ -9,15 +9,51 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance Type=mouse:MouseDevicesViewModel, IsDesignTimeCreatable=False}">
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
-        <ListView x:Name="PART_List" ItemsSource="{Binding MouseDevices}" IsItemClickEnabled="False" SelectionMode="Single" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock FontSize="16" Margin="24, 12">
+                <Run Text="&#xe962;" FontFamily="Segoe MDL2 Assets" FontSize="12"/>
+                <Run Text="Mouse Device List" />
+            </TextBlock>
+
+            <ListView x:Name="PART_List" BorderBrush="Transparent" Grid.Row="1" ItemsSource="{Binding MouseDevices}" SelectionMode="Single" Background="Transparent">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="6, 4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Manufacturer}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
         <local:MouseDetailView Grid.Column="1" DataContext="{Binding ElementName=PART_List, Path=SelectedItem}" />
 
-        <ProgressRing Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsIndeterminate="{Binding IsLoading}" />
+        <ProgressBar 
+            Grid.ColumnSpan="2" 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Center" 
+            IsIndeterminate="{Binding IsLoading}" 
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </Page>

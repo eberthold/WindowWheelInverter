@@ -2,11 +2,13 @@
     x:Class="WiWheeIn.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WiWheeIn.WinUI">
+    xmlns:local="using:WiWheeIn.WinUI" 
+    xmlns:resources="using:WiWheeIn.WinUI.Resources">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <resources:ModuleResourceDictionary />
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->

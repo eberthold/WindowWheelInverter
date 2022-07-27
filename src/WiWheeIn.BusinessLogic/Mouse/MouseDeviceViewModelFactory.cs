@@ -1,4 +1,5 @@
 ﻿using WiWheeIn.BusinessLogic.Devices;
+using WiWheeIn.BusinessLogic.User;
 
 namespace WiWheeIn.BusinessLogic.Mouse
 {
@@ -6,13 +7,16 @@ namespace WiWheeIn.BusinessLogic.Mouse
     {
         private readonly IDevicePathBuilder _devicePathBuilder;
         private readonly IMouseWheelInvertedStateService _mouseWheelInvertedStateService;
+        private readonly IUserInfoService _userInfoService;
 
         public MouseDeviceViewModelFactory(
             IDevicePathBuilder devicePathBuilder,
-            IMouseWheelInvertedStateService mouseWheelInvertedStateService)
+            IMouseWheelInvertedStateService mouseWheelInvertedStateService,
+            IUserInfoService userInfoService)
         {
             _devicePathBuilder = devicePathBuilder;
             _mouseWheelInvertedStateService = mouseWheelInvertedStateService;
+            _userInfoService = userInfoService;
         }
 
         public MouseDeviceViewModel Create(DeviceInfo deviceInfo)
@@ -20,7 +24,8 @@ namespace WiWheeIn.BusinessLogic.Mouse
             return new MouseDeviceViewModel(
                 deviceInfo,
                 _devicePathBuilder,
-                _mouseWheelInvertedStateService);
+                _mouseWheelInvertedStateService,
+                _userInfoService);
         }
     }
 }

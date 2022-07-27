@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using WiWheeIn.BusinessLogic.Devices;
+using WiWheeIn.BusinessLogic.User;
 
 namespace WiWheeIn.BusinessLogic.Mouse;
 
@@ -8,17 +9,21 @@ public class MouseDeviceViewModel : ObservableObject
     private readonly DeviceInfo _deviceInfo;
     private readonly IDevicePathBuilder _devicePathBuilder;
     private readonly IMouseWheelInvertedStateService _mouseInvertedStateService;
+    private readonly IUserInfoService _userInfoService;
+    private bool _canSetState;
     private bool _isInverted;
     private string _devicePath = string.Empty;
 
     public MouseDeviceViewModel(
         DeviceInfo deviceInfo,
         IDevicePathBuilder devicePathBuilder,
-        IMouseWheelInvertedStateService mouseInvertedStateService)
+        IMouseWheelInvertedStateService mouseInvertedStateService,
+        IUserInfoService userInfoService)
     {
         _deviceInfo = deviceInfo;
         _devicePathBuilder = devicePathBuilder;
         _mouseInvertedStateService = mouseInvertedStateService;
+        _userInfoService = userInfoService;
     }
 
     public string Manufacturer => _deviceInfo.Manufacturer;
@@ -45,12 +50,19 @@ public class MouseDeviceViewModel : ObservableObject
         }
     }
 
+    public bool CanSetState
+    {
+        get => _canSetState;
+        set => SetProperty(ref _canSetState, value);
+    }
+
     public IDictionary<string, string> AllInfos => _deviceInfo.AllInfos;
 
     public async Task LoadDataAsync()
     {
         DevicePath = _devicePathBuilder.GetDevicePath(_deviceInfo);
         _isInverted = await _mouseInvertedStateService.GetIsInvertedStateAsync(_deviceInfo).ConfigureAwait(false);
+        _canSetState = await _userInfoService.CheckUserIsAdminAsync().ConfigureAwait(false);
         OnPropertyChanged(nameof(IsInverted));
     }
 

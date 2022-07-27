@@ -1,0 +1,10 @@
+﻿<ResourceDictionary 
+    x:Class="WiWheeIn.WPF.Resources.ModuleResourceDictionary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:converters="clr-namespace:WiWheeIn.WPF.Converters">
+
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" IsInverted="True"/>
+
+</ResourceDictionary>

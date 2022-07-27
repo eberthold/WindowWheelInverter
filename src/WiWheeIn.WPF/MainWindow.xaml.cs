@@ -1,21 +1,24 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using WiWheeIn.BusinessLogic;
 using WiWheeIn.BusinessLogic.Mouse;
+using WiWheeIn.Windows.User;
 
 namespace WiWheeIn.WPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
 
-            var vm = App.ServiceProvider.GetService<MouseDevicesViewModel>();
+            var vm = App.ServiceProvider.GetRequiredService<MouseDevicesViewModel>();
             PART_Page.DataContext = vm;
-            _ = vm.LoadDataAsync();
+            _ = vm.LoadDataAsync().ConfigureAwait(false);
+
+            var pageVm = new ApplicationStateViewModel(new UserInfoService());
+            DataContext = pageVm;
+            _ = pageVm.LoadDataAsync().ConfigureAwait(false);
         }
     }
 }

@@ -1,12 +1,24 @@
 ﻿<Window x:Class="WiWheeIn.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WiWheeIn.WPF"
+        xmlns:bl="clr-namespace:WiWheeIn.BusinessLogic;assembly=WiWheeIn.BusinessLogic"
         xmlns:mouse="clr-namespace:WiWheeIn.WPF.Mouse"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=bl:ApplicationStateViewModel, IsDesignTimeCreatable=False}"
         Title="MainWindow" Height="450" Width="800">
 
-    <mouse:MouseOverview x:Name="PART_Page" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Background="PaleGoldenrod" Visibility="{Binding IsUserAdmin, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+            <TextBlock Margin="8" Text="You have to start this application with elevated user rights in order to change the mouse wheel direction." TextWrapping="Wrap" />
+        </Border>
+
+        <mouse:MouseOverview Grid.Row="1" x:Name="PART_Page" />
+    </Grid>
 </Window>

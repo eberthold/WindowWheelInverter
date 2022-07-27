@@ -6,32 +6,39 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mouse="using:WiWheeIn.BusinessLogic.Mouse"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance Type=mouse:MouseDeviceViewModel, IsDesignTimeCreatable=false}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    d:DataContext="{d:DesignInstance Type=mouse:MouseDeviceViewModel, IsDesignTimeCreatable=false}">
 
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="4" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="4" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <ToggleSwitch Header="Inverted" IsOn="{Binding IsInverted, Mode=TwoWay}" />
+        <TextBlock Text="Details" FontSize="16" Margin="12" />
 
-        <TextBox Grid.Row="2" Text="{Binding DevicePath}" IsReadOnly="True" TextWrapping="Wrap"/>
+        <ToggleSwitch Grid.Row="1" OnContent="Inverted" OffContent="Regular" IsOn="{Binding IsInverted, Mode=TwoWay}" Margin="12, 4" IsEnabled="{Binding CanSetState}"/>
 
-        <ListView Grid.Row="4" ItemsSource="{Binding AllInfos}" IsItemClickEnabled="False" SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <Run Text="{Binding Key, Mode=OneWay}" /><Run Text=":" />
-                        <Run Text="{Binding Value, Mode=OneWay}" />
-                    </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Expander Grid.Row="2" Header="Mouse Device Details" Padding="9" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="Transparent">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBox Text="{Binding DevicePath, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" Margin="0, 4"/>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding AllInfos}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Key, Mode=OneWay}" /><Run Text=":" />
+                                <Run Text="{Binding Value, Mode=OneWay}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Expander>
     </Grid>
-    
 </Page>

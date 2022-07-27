@@ -4,9 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mouse="clr-namespace:WiWheeIn.BusinessLogic.Mouse;assembly=WiWheeIn.BusinessLogic"
     xmlns:local="clr-namespace:WiWheeIn.WPF.Mouse"
     mc:Ignorable="d" 
     Background="White"      
+    d:DataContext="{d:DesignInstance Type=mouse:MouseDeviceViewModel, IsDesignTimeCreatable=False}"
     d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
@@ -18,7 +20,7 @@
 
         <TextBlock Text="Details" FontSize="16" Margin="12" />
         
-        <CheckBox Grid.Row="1" Content="Inverted" IsChecked="{Binding IsInverted, Mode=TwoWay}" Margin="12, 4"/>
+        <CheckBox Grid.Row="1" Content="Inverted" IsChecked="{Binding IsInverted, Mode=TwoWay}" Margin="12, 4" IsEnabled="{Binding CanSetState}"/>
 
         <Expander Grid.Row="2" Header="Mouse Device Details" Padding="9">
             <Grid>

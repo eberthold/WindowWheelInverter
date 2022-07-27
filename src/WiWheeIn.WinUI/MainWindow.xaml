@@ -8,5 +8,16 @@
     xmlns:mouse="using:WiWheeIn.WinUI.Mouse"
     mc:Ignorable="d">
 
-    <mouse:MouseOverview x:Name="PART_Page" />
+    <Grid x:Name="PART_Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Background="PaleGoldenrod" Visibility="{Binding IsUserAdmin, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+            <TextBlock Margin="8" Text="You have to start this application with elevated user rights in order to change the mouse wheel direction." TextWrapping="Wrap" />
+        </Border>
+        
+        <mouse:MouseOverview Grid.Row="1" x:Name="PART_Page" />
+    </Grid>
 </Window>

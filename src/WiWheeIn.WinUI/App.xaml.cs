@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using System;
 using WiWheeIn.BusinessLogic.Devices;
 using WiWheeIn.BusinessLogic.Mouse;
+using WiWheeIn.Windows;
 using WiWheeIn.Windows.Devices;
 using WiWheeIn.Windows.Mouse;
 
@@ -25,15 +26,7 @@ namespace WiWheeIn.WinUI
             this.InitializeComponent();
 
             var services = new ServiceCollection();
-
-            services.AddSingleton<IDevicePathBuilder, DevicePathBuilder>();
-            services.AddSingleton<IMouseDeviceCrawler, MouseDeviceCrawler>();
-            services.AddSingleton<IMouseWheelInvertedStateService, MouseWheelInvertedStateService>();
-            services.AddSingleton<IMouseDeviceViewModelFactory, MouseDeviceViewModelFactory>();
-
-            services.AddTransient<MouseDeviceViewModel>();
-            services.AddTransient<MouseDevicesViewModel>();
-
+            Bootstrapper.ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
         }
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using WiWheeIn.BusinessLogic;
 using WiWheeIn.BusinessLogic.Mouse;
+using WiWheeIn.Windows.User;
 
 namespace WiWheeIn.WinUI;
 
@@ -10,8 +12,12 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        var vm = (App.Current as App).ServiceProvider.GetService<MouseDevicesViewModel>();
-        PART_Page.DataContext = vm;
-        _ = vm.LoadDataAsync();
+        var devicesViewModel = ((App)Application.Current).ServiceProvider.GetRequiredService<MouseDevicesViewModel>();
+        PART_Page.DataContext = devicesViewModel;
+        _ = devicesViewModel.LoadDataAsync();
+
+        var applicationStateViewModel = new ApplicationStateViewModel(new UserInfoService());
+        PART_Root.DataContext = applicationStateViewModel;
+        _ = applicationStateViewModel.LoadDataAsync().ConfigureAwait(false);
     }
 }
